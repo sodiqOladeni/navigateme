@@ -1,8 +1,13 @@
 import {View, Text, TextInput, Pressable, StyleSheet} from "react-native"
 import {router} from "expo-router"
+import {auth} from "@/utils/auth"
 
 export default function Login() {
-    
+    const handleLogin = () => {
+        // backend calls
+        auth.login()
+        router.replace("/(main)/home")
+    }
     return (
     <View style={styles.container}>
       <Text style={styles.title}>Welcome Back</Text>
@@ -10,7 +15,7 @@ export default function Login() {
       <TextInput placeholder="Email" style={styles.input}/>
       <TextInput placeholder="Password" secureTextEntry style={styles.input}/>
 
-      <Pressable style={styles.button} onPress={() => {}}>
+      <Pressable style={styles.button} onPress={handleLogin}>
         <Text style={styles.buttonText}>Login</Text>
       </Pressable>
 

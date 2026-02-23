@@ -1,6 +1,12 @@
 import {View, Text, Pressable} from "react-native"
+import {auth} from "@/utils/auth"
+import {router} from "expo-router"
 
 export default function Home() {
+    const handleLogout = () => {
+        auth.logout();
+        router.replace("/(ftue)/login");
+    }
     return (
 <View style={{
       flex:1,
@@ -12,7 +18,7 @@ export default function Home() {
       <Text style={{ marginTop:10 }}>You are logged in 🎉</Text>
 
       <Pressable
-        onPress={() => {}}
+        onPress={handleLogout}
         style={{
           marginTop:30,
           backgroundColor:"#ef4444",
