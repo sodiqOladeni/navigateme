@@ -2,31 +2,47 @@ import {View, Text, Pressable, StyleSheet, Modal, TextInput, KeyboardAvoidingVie
 import {auth} from "@/utils/auth"
 import {router} from "expo-router"
 import {SafeAreaView, useSafeAreaInsets} from "react-native-safe-area-context"
-import { useState } from "react"
+import { useState, useEffect } from "react"
+
+import { createOrMigrateDbIfNeeded } from "../database/db";
+import { addTodo, listTodos } from "../repository/todos";
 
 type Todo = {
-  id: string,
-  title: string
+  id: number,
+  title: string,
+  created_at: number
 }
 
 export default function Home() {
   const [visible, setVisible] = useState(false)
   const [input, setInput] = useState("")
   const insets = useSafeAreaInsets();
+  const [loading, setLoading] = useState(true)
 
-  const [todos, setTodo] = useState<Todo[]>([])
-""
-  const saveTodo = () => {
+  const [todos, setTodos] = useState<Todo[]>([])
+
+   useEffect(() => {
+  (async () => {
+    await createOrMigrateDbIfNeeded();
+    await refresh();
+    setLoading(false);
+  })();
+}, []);
+
+async function refresh() {
+  const data = await listTodos();
+  setTodos(data);
+}
+
+  const saveTodo = async () => {
+    const trimmedTitle = input.trim()
     if(!input.trim()) return;
 
-    const newTodo: Todo = {
-      id: Date.now.toString(),
-      title: input
-    }
-
-    setTodo(prev => [...prev, newTodo]);
+    addTodo(trimmedTitle)
     setInput("")
     setVisible(false)
+
+    await refresh()
   }
 
     return (
@@ -41,13 +57,14 @@ export default function Home() {
       </View>
 
       <FlatList data={todos}
-      keyExtractor={(item) => item.id}
+      keyExtractor={(item) => String(item.id)}
       contentContainerStyle={{
         padding: 20,
         paddingBottom: 20 + insets.bottom
       }}
       renderItem={({item}) => (
         <View style={styles.todoCard}>
+          
           <Text style={{fontSize: 16}}>{item.title}</Text>
         </View>
       )}
