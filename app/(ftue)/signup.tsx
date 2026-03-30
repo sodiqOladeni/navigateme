@@ -1,15 +1,32 @@
 import {View, Text, TextInput, Pressable, StyleSheet} from "react-native"
 import {router} from "expo-router"
+import { useState } from "react";
+import { signup } from "@/utils/auth";
+
+
 export default function Signup() {
+  const [name, setName] = useState("")
+  const [email, setEmail] = useState("")
+  const [password, setPassword] = useState("")
+
+  const signupHandler = async () => {
+    try{
+      await signup(name, email, password)
+    }catch(error){
+      console.error(error)
+    }
+  }
+
+
     return (
-<View style={styles.container}>
+    <View style={styles.container}>
       <Text style={styles.title}>Create Account</Text>
 
-      <TextInput placeholder="Full name" style={styles.input}/>
-      <TextInput placeholder="Email" style={styles.input}/>
-      <TextInput placeholder="Password" secureTextEntry style={styles.input}/>
+      <TextInput placeholder="Full name" onChangeText={setName} style={styles.input}/>
+      <TextInput placeholder="Email" onChangeText={setEmail}  style={styles.input}/>
+      <TextInput placeholder="Password" onChangeText={setPassword}  secureTextEntry style={styles.input}/>
 
-      <Pressable style={styles.button} onPress={() => router.replace("/(ftue)/login")}>
+      <Pressable style={styles.button} onPress={signupHandler}>
         <Text style={styles.buttonText}>Sign up</Text>
       </Pressable>
     </View>

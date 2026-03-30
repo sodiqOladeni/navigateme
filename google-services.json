@@ -1,0 +1,29 @@
+{
+  "project_info": {
+    "project_number": "350653014336",
+    "project_id": "notzero-learn",
+    "storage_bucket": "notzero-learn.firebasestorage.app"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:350653014336:android:d08431a132461aef625aa5",
+        "android_client_info": {
+          "package_name": "tech.notzero.app"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyCtAHylkM8NGuJbMIwkw6QHVbhtgjzrvLQ"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

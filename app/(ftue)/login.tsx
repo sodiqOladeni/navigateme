@@ -1,19 +1,25 @@
 import {View, Text, TextInput, Pressable, StyleSheet} from "react-native"
 import {router} from "expo-router"
-import {auth} from "@/utils/auth"
+import { login } from "@/utils/auth";
+import { useState } from "react";
+// import {auth} from "@/utils/auth"
 
 export default function Login() {
-    const handleLogin = () => {
+  const [email, setEmail] = useState("")
+  const [password, setPassword]= useState("")
+
+    const handleLogin = async () => {
         // backend calls
-        auth.login()
+        await login(email, password)
         router.replace("/(main)/home")
     }
+
     return (
     <View style={styles.container}>
       <Text style={styles.title}>Welcome Back</Text>
 
-      <TextInput placeholder="Email" style={styles.input}/>
-      <TextInput placeholder="Password" secureTextEntry style={styles.input}/>
+      <TextInput placeholder="Email" onChangeText={setEmail} style={styles.input}/>
+      <TextInput placeholder="Password" onChangeText={setPassword} secureTextEntry style={styles.input}/>
 
       <Pressable style={styles.button} onPress={handleLogin}>
         <Text style={styles.buttonText}>Login</Text>

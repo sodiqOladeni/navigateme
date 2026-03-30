@@ -27,7 +27,7 @@ export default function Home() {
     await refresh();
     setLoading(false);
   })();
-}, []);
+}, [ ]);
 
 async function refresh() {
   const data = await listTodos();
